@@ -1,6 +1,10 @@
-import React, { Children, lazy, Suspense } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
+import React, { lazy, Suspense } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
+import About from '../pages/About';
+import AboutManager from '../pages/About/about-manager';
+import AboutUser from '../pages/About/about-user';
+import Contact from '../pages/Contact';
+import User from '../pages/user'
 /**
  * 生成路由
  */
@@ -63,16 +67,17 @@ function createChildrenFactory(baseRouteConfig) {
         }, []);
     };
 
-    // 调用递归方法生成路由树
     let res = arrToTree(_baseRouteConfig, null);
+    res.forEach(item => {
+        delete item.parentId
+        delete item.id
+    });
     return res;
 }
 
 const routerConfig = createChildrenFactory(createRouterConfig(elements))
 
-// 创建路由配置
 const router = createBrowserRouter(routerConfig);
-
 export default router
 
 
